@@ -1,0 +1,20 @@
+
+
+
+i want to make a platform to manage sales for my platform service mate, this is a whitelabelling solution platform which is like urbancompany
+it have 3 plans (basic 1499 inr - website + ios + android + elemntary seo, meidum  2599 - webwebsite + ios + android + elemntary seo + 10 posts/flyers, lead management,  advanced  3999 - Website
+Admin Panel
+Android App
+iOS App
+E lementar y SE O
+10 Posts / Flyers
+Lead Management
+4 ads /month
+3 reels )
+
+admin can change pricing later
+
+
+1. add lead details and requirements
+2. export invoice (plan, name, contact, email, address, time ) only these would be changed else everything would be same, i can provide template, export as pdf
+3. mark leads as converted if they are and select their plans (and see previous details too)

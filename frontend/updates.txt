@@ -1,0 +1,4 @@
+1. invoice heading is not responsive kindly fix that, content overlapping 
+2. make plan card more good
+3. invoice section in admin is overflowing add scroll in table if overflowing
+4. in leads table add tabs at table top (converted, new, lost, in progress)
