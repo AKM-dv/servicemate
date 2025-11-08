@@ -11,7 +11,7 @@ import requests
 from flask import Flask, jsonify, request, send_from_directory, has_request_context
 from flask_cors import CORS
 import mysql.connector
-from mysql.connector import pooling
+from mysql.connector import pooling, errorcode
 from werkzeug.security import check_password_hash, generate_password_hash
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
@@ -30,11 +30,11 @@ class Database:
         config = {
             "pool_name": "servicemate_pool",
             "pool_size": int(os.getenv("DB_POOL_SIZE", "5")),
-            "host": os.getenv("DB_HOST", "127.0.0.1"),
+            "host": os.getenv("DB_HOST", "localhost"),
             "port": int(os.getenv("DB_PORT", "3306")),
-            "user": os.getenv("DB_USER", "root"),
-            "password": os.getenv("DB_PASSWORD", ""),
-            "database": os.getenv("DB_NAME", "servicemate"),
+            "user": os.getenv("DB_USER", "mkelqfjv_bsma"),
+            "password": os.getenv("DB_PASSWORD", "mkelqfjv_bsma"),
+            "database": os.getenv("DB_NAME", "mkelqfjv_bsma"),
             "charset": "utf8mb4",
             "collation": "utf8mb4_unicode_ci",
         }
@@ -126,6 +126,15 @@ def execute_dict(query: str, params: Optional[tuple] = None, *, fetchone: bool =
         conn.close()
 
 
+def column_exists(table: str, column: str) -> bool:
+    result = execute(
+        f"SHOW COLUMNS FROM {table} LIKE %s",
+        (column,),
+        fetchone=True,
+    )
+    return bool(result)
+
+
 def initialize_schema(app: Flask) -> None:
     statements = [
         """
@@ -141,7 +150,7 @@ def initialize_schema(app: Flask) -> None:
             id INT AUTO_INCREMENT PRIMARY KEY,
             name VARCHAR(120) NOT NULL,
             price DECIMAL(10,2) NOT NULL,
-            features JSON NOT NULL,
+            features TEXT NOT NULL,
             is_active TINYINT(1) DEFAULT 1,
             sort_order INT DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -287,7 +296,7 @@ def seed_plans() -> None:
 
     if basic_plan:
         execute(
-            "UPDATE plans SET price=%s, features=CAST(%s AS JSON), is_active=1, sort_order=1 WHERE id=%s",
+            "UPDATE plans SET price=%s, features=%s, is_active=1, sort_order=1 WHERE id=%s",
             (
                 basic_price,
                 json_dumps(basic_features),
@@ -298,7 +307,7 @@ def seed_plans() -> None:
     else:
         execute("DELETE FROM plans")
         execute(
-            "INSERT INTO plans (name, price, features, is_active, sort_order) VALUES (%s, %s, CAST(%s AS JSON), 1, 1)",
+            "INSERT INTO plans (name, price, features, is_active, sort_order) VALUES (%s, %s, %s, 1, 1)",
             (
                 "Basic",
                 basic_price,
@@ -308,16 +317,14 @@ def seed_plans() -> None:
 
 
 def ensure_lead_phone_column() -> None:
-    exists = execute(
-        """
-        SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = %s AND TABLE_NAME = 'leads' AND COLUMN_NAME = 'phone'
-        """,
-        (os.getenv("DB_NAME", "servicemate"),),
-        fetchone=True,
-    )
-    if not exists:
+    if column_exists("leads", "phone"):
+        return
+    try:
         execute("ALTER TABLE leads ADD COLUMN phone VARCHAR(20) DEFAULT NULL")
+    except mysql.connector.Error as exc:  # type: ignore[attr-defined]
+        if getattr(exc, "errno", None) == errorcode.ER_DUP_FIELDNAME:
+            return
+        raise
 
 
 def ensure_lead_optional_columns() -> None:
@@ -334,15 +341,7 @@ def ensure_lead_optional_columns() -> None:
 
 
 def ensure_user_pin_column() -> None:
-    exists = execute(
-        """
-        SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
-        WHERE TABLE_SCHEMA = %s AND TABLE_NAME = 'users' AND COLUMN_NAME = 'pin_hash'
-        """,
-        (os.getenv("DB_NAME", "servicemate"),),
-        fetchone=True,
-    )
-    if not exists:
+    if not column_exists("users", "pin_hash"):
         execute(
             """
             ALTER TABLE users ADD COLUMN pin_hash VARCHAR(255) DEFAULT NULL
@@ -360,7 +359,6 @@ def ensure_lead_status_enum() -> None:
 
 
 def ensure_followup_columns() -> None:
-    db_name = os.getenv("DB_NAME", "servicemate")
     definitions = {
         "follow_up_date": "ADD COLUMN follow_up_date DATE",
         "objective": "ADD COLUMN objective VARCHAR(255) DEFAULT NULL",
@@ -368,15 +366,7 @@ def ensure_followup_columns() -> None:
     }
 
     for column, ddl in definitions.items():
-        exists = execute(
-            """
-            SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = %s AND TABLE_NAME = 'lead_followups' AND COLUMN_NAME = %s
-            """,
-            (db_name, column),
-            fetchone=True,
-        )
-        if not exists:
+        if not column_exists("lead_followups", column):
             execute(f"ALTER TABLE lead_followups {ddl}")
 
 
@@ -390,7 +380,6 @@ def ensure_followup_status_enum() -> None:
 
 
 def ensure_invoice_columns() -> None:
-    db_name = os.getenv("DB_NAME", "servicemate")
     definitions = {
         "setup_fee_amount": "ADD COLUMN setup_fee_amount DECIMAL(10,2) NOT NULL DEFAULT 3000.00",
         "setup_fee_discount": "ADD COLUMN setup_fee_discount DECIMAL(10,2) NOT NULL DEFAULT 0.00",
@@ -398,15 +387,7 @@ def ensure_invoice_columns() -> None:
     }
 
     for column, ddl in definitions.items():
-        exists = execute(
-            """
-            SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS
-            WHERE TABLE_SCHEMA = %s AND TABLE_NAME = 'invoices' AND COLUMN_NAME = %s
-            """,
-            (db_name, column),
-            fetchone=True,
-        )
-        if not exists:
+        if not column_exists("invoices", column):
             execute(f"ALTER TABLE invoices {ddl}")
 
 
@@ -790,7 +771,7 @@ def serialize_followup_record(entry: Dict[str, Any]) -> Dict[str, Any]:
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
-CORS(app, resources={r"/*": {"origins": os.getenv("FRONTEND_URL", "http://localhost:5173")}})
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 db.init_app(app)
 
@@ -816,6 +797,11 @@ def ensure_admin_pin() -> None:
 
 initialize_schema(app)
 ensure_invoice_pdf_dir()
+
+
+@app.route("/health", methods=["GET"])
+def health():
+    return jsonify({"status": "ok"})
 
 
 def authenticate_pin(pin: str) -> bool:
@@ -876,7 +862,7 @@ def update_plans():
         basic = execute_dict("SELECT id FROM plans WHERE name = %s LIMIT 1", ("Basic",), fetchone=True)
 
     execute(
-        "UPDATE plans SET name=%s, price=%s, features=CAST(%s AS JSON), is_active=1, sort_order=1 WHERE id=%s",
+        "UPDATE plans SET name=%s, price=%s, features=%s, is_active=1, sort_order=1 WHERE id=%s",
         (
             name,
             price,
@@ -1438,4 +1424,3 @@ def serve_invoice_pdf(filename: str):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5700")), debug=True)
-
