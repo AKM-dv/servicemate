@@ -1,32 +1,960 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="On-Demand Service Booking Platform - Urban Company like solution for home cleaning, plumbing, salon services, AC servicing and more. Book your free demo today!" />
-    <meta name="keywords" content="service booking platform, on-demand services, home cleaning, plumbing services, salon services, AC servicing, Urban Company alternative" />
-    <meta name="author" content="Service Mate" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://service-mate.com/" />
-    <meta property="og:title" content="On-Demand Service Booking Platform - Service Mate" />
-    <meta property="og:description" content="Urban Company like solution for home cleaning, plumbing, salon services, AC servicing and more. Book your free demo today!" />
-    <meta property="og:image" content="/logo.png" />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://service-mate.com/" />
-    <meta property="twitter:title" content="On-Demand Service Booking Platform - Service Mate" />
-    <meta property="twitter:description" content="Urban Company like solution for home cleaning, plumbing, salon services, AC servicing and more. Book your free demo today!" />
-    <meta property="twitter:image" content="/logo.png" />
-    
-    <title>On-Demand Service Booking Platform - Service Mate</title>
-    <script type="module" crossorigin src="/assets/index-ByS68Syq.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BhXRKtDC.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Servicemate — Launch Your Own Home Services Platform</title>
+<meta name="description" content="Complete home services platform with User App, Provider App, Admin Panel, booking management, payments, packages, notifications and provider assignment — built and ready to deploy.">
+<link rel="icon" href="logo.png" type="image/png">
+<link rel="apple-touch-icon" href="logo.png">
+<meta property="og:title" content="Servicemate — Launch Your Own Home Services Platform">
+<meta property="og:description" content="Complete home services platform with User App, Provider App, Admin Panel, booking management, payments, packages, notifications and provider assignment — built and ready to deploy.">
+<meta property="og:image" content="banner.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Servicemate — Launch Your Own Home Services Platform">
+<meta name="twitter:description" content="Complete home services platform with User App, Provider App, Admin Panel, booking management, payments, packages, notifications and provider assignment — built and ready to deploy.">
+<meta name="twitter:image" content="banner.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-900:#0b2e6b;
+    --blue-700:#1554d8;
+    --blue-500:#2f6dfb;
+    --blue-100:#e8f0ff;
+    --ink:#10162b;
+    --ink-soft:#5b6478;
+    --bg:#ffffff;
+    --bg-soft:#f6f8fc;
+    --line:#e6eaf3;
+    --green:#17b26a;
+    --grad: linear-gradient(135deg,#2f6dfb 0%,#7aa6ff 55%,#bfe0ff 100%);
+    --shadow: 0 18px 40px -18px rgba(11,46,107,0.25);
+    --radius: 18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.disp{font-family:'Sora',sans-serif;}
+  a{text-decoration:none;color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  section{padding:88px 0;}
+  @media(max-width:768px){section{padding:56px 0;}}
+
+  /* ---------- placeholder image card ---------- */
+  .ph{
+    position:relative;
+    background:linear-gradient(150deg,#eef3ff 0%, #dde8ff 100%);
+    border:1.5px dashed #9fb8ee;
+    border-radius:16px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    color:#5577c9;
+    text-align:center;
+    overflow:hidden;
+    gap:6px;
+  }
+  .ph svg{width:34px;height:34px;opacity:.75;}
+  .ph span{font-size:12.5px;font-weight:600;letter-spacing:.02em;}
+  .ph small{font-size:10.5px;color:#7c8fc4;font-weight:500;}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1180px;margin:0 auto;}
+  .logo{display:flex;align-items:center;}
+  .logo img{height:40px;width:auto;display:block;}
+  .navlinks{display:flex;gap:28px;font-weight:600;font-size:14px;color:var(--ink-soft);}
+  .navlinks a:hover{color:var(--blue-700);}
+  .nav-cta{
+    background:var(--blue-700);color:#fff;padding:10px 18px;border-radius:10px;font-weight:700;font-size:14px;
+    box-shadow:0 8px 18px -8px rgba(21,84,216,.6);
+  }
+  @media(max-width:860px){.navlinks{display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:
+      radial-gradient(900px 500px at 85% -10%, #dbe8ff 0%, rgba(219,232,255,0) 60%),
+      radial-gradient(700px 400px at -10% 10%, #eef3ff 0%, rgba(238,243,255,0) 60%),
+      var(--bg);
+    padding-top:72px;padding-bottom:40px;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blue-100);color:var(--blue-700);
+    font-weight:700;font-size:12.5px;padding:7px 14px;border-radius:999px;
+    margin-bottom:20px;letter-spacing:.02em;
+  }
+  .hero h1{
+    font-size:clamp(34px,5vw,58px);line-height:1.06;letter-spacing:-0.02em;
+    font-weight:800;max-width:780px;
+  }
+  .hero h1 .accent{
+    background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.sub{
+    color:var(--ink-soft);font-size:17.5px;line-height:1.6;max-width:620px;margin-top:20px;
+  }
+  .cta-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;}
+  .btn{
+    padding:14px 24px;border-radius:12px;font-weight:700;font-size:15px;
+    display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--blue-700);color:#fff;box-shadow:0 12px 24px -10px rgba(21,84,216,.55);}
+  .btn-whats{background:var(--green);color:#fff;box-shadow:0 12px 24px -10px rgba(23,178,106,.5);}
+  .btn-ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line);}
+  .badges{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:34px;}
+  .badge{font-size:13.5px;font-weight:600;color:var(--ink-soft);display:flex;align-items:center;gap:6px;}
+  .badge::before{content:"✓";color:var(--green);font-weight:800;}
+
+  .hero-visual{margin-top:56px;text-align:center;}
+  .hero-img{
+    width:100%;max-width:1100px;margin:0 auto;display:block;
+    border-radius:20px;box-shadow:var(--shadow);
+  }
+
+  /* ---------- section heading ---------- */
+  .sec-head{max-width:680px;margin:0 auto 48px;text-align:center;}
+  .sec-eyebrow{color:var(--blue-700);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;}
+  .sec-head h2{font-size:clamp(26px,3.4vw,38px);letter-spacing:-0.01em;font-weight:800;margin:0 0 14px;}
+  .sec-head p{color:var(--ink-soft);font-size:16px;line-height:1.6;margin:0;}
+
+  /* ---------- demo video ---------- */
+  .demo-section{background:var(--bg-soft);}
+  .video-card{
+    max-width:880px;margin:0 auto;border-radius:22px;
+    aspect-ratio:16/9;position:relative;overflow:hidden;
+    box-shadow:var(--shadow);background:#000;
+  }
+  .video-card iframe{
+    position:absolute;inset:0;width:100%;height:100%;border:0;
+  }
+  .video-tag{
+    position:absolute;top:18px;left:18px;z-index:2;color:#fff;font-size:12px;font-weight:600;
+    background:rgba(0,0,0,.45);padding:6px 12px;border-radius:999px;pointer-events:none;
+  }
+  .feat-pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:34px;}
+  .pill{background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:600;color:var(--ink-soft);padding:9px 16px;border-radius:999px;}
+  .pill::before{content:"✓ ";color:var(--green);font-weight:800;}
+
+  /* ---------- feature grid ---------- */
+  .grid-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+  @media(max-width:900px){.grid-cards{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.grid-cards{grid-template-columns:1fr;}}
+  .fcard{
+    border:1px solid var(--line);border-radius:var(--radius);padding:24px;
+    background:#fff;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .fcard:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent;}
+  .ficon{
+    width:42px;height:42px;border-radius:11px;background:var(--blue-100);
+    display:flex;align-items:center;justify-content:center;margin-bottom:14px;color:var(--blue-700);font-weight:800;
+  }
+  .ficon svg{width:22px;height:22px;}
+  .eyebrow svg{width:14px;height:14px;flex-shrink:0;}
+  .ico-play{width:14px;height:14px;flex-shrink:0;}
+  .fcard h3{font-size:16px;margin:0 0 6px;font-weight:700;}
+  .fcard p{font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.5;}
+
+  /* ---------- platform overview (3 screens) ---------- */
+  .platform-stack{display:flex;flex-direction:column;gap:28px;}
+  .platform-mobile-row{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  @media(max-width:760px){.platform-mobile-row{grid-template-columns:1fr;}}
+  .platform-col{
+    background:var(--bg-soft);border-radius:22px;padding:26px;border:1px solid var(--line);
+  }
+  .platform-col h3{font-size:19px;margin:0 0 4px;}
+  .platform-col .tag{font-size:12.5px;color:var(--blue-700);font-weight:700;margin-bottom:18px;display:block;}
+  .platform-shot{
+    border-radius:16px;overflow:hidden;border:1px solid var(--line);background:#fff;
+    box-shadow:0 10px 28px -14px rgba(11,46,107,.18);margin-bottom:18px;
+  }
+  .platform-shot img{width:100%;height:auto;display:block;}
+  .platform-shot--mobile{max-width:300px;margin-left:auto;margin-right:auto;}
+  .platform-col--admin{padding:28px 28px 24px;}
+  .platform-admin-head{margin-bottom:20px;}
+  .platform-feats{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;
+    list-style:none;padding:0;margin:0;
+  }
+  .platform-feats li{
+    display:flex;align-items:center;gap:9px;
+    background:#fff;border:1px solid var(--line);border-radius:11px;
+    padding:10px 12px;font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.3;
+    transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  }
+  .platform-feats li:hover{
+    border-color:#c9d8f5;box-shadow:0 8px 18px -14px rgba(21,84,216,.35);transform:translateY(-1px);
+  }
+  .platform-feats li::before{
+    content:"";width:22px;height:22px;flex-shrink:0;border-radius:7px;background:var(--blue-100);
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231554d8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:center;background-size:12px;
+  }
+  .platform-feats--wide{
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .platform-feats--wide li{flex:0 1 auto;padding:10px 14px;}
+  @media(max-width:420px){.platform-feats{grid-template-columns:1fr;}}
+
+  /* ---------- feature highlights big grid ---------- */
+  .chip-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+  .chip{
+    background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;
+    padding:14px 18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:10px;
+  }
+  .chip .dotc{width:7px;height:7px;border-radius:50%;background:var(--grad);}
+
+  /* ---------- package section ---------- */
+  .pkg-wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center;}
+  @media(max-width:880px){.pkg-wrap{grid-template-columns:1fr;}}
+  .pkg-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px;}
+  .pkg-feats div{font-size:14px;font-weight:600;color:var(--ink);display:flex;gap:8px;align-items:center;}
+  .pkg-feats div::before{content:"✓";color:var(--green);font-weight:800;}
+  .pkg-visual,.custom-visual{
+    border-radius:22px;overflow:hidden;border:1px solid var(--line);background:#fff;
+    box-shadow:0 10px 28px -14px rgba(11,46,107,.18);
+  }
+  .pkg-visual img,.custom-visual img{width:100%;height:auto;display:block;}
+
+  /* ---------- homepage customization ---------- */
+  .custom-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;}
+  @media(max-width:880px){.custom-wrap{grid-template-columns:1fr;}}
+  .custom-list{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+  .custom-list .item{display:flex;gap:14px;align-items:flex-start;}
+  .custom-list .num{
+    width:30px;height:30px;border-radius:9px;background:var(--blue-100);color:var(--blue-700);
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0;
+  }
+  .custom-list p{margin:0;font-weight:600;font-size:14.5px;padding-top:4px;}
+
+  /* ---------- business flow ---------- */
+  .flow-bg{background:linear-gradient(180deg,#0b2e6b,#10193b);color:#fff;}
+  .flow-bg .sec-head h2{color:#fff;}
+  .flow-bg .sec-head p{color:#aab8e0;}
+  .flow-bg .sec-eyebrow{color:#8fb3ff;}
+  .flow-list{display:flex;flex-direction:column;max-width:520px;margin:0 auto;}
+  .flow-step{display:flex;align-items:center;gap:18px;padding:14px 0;position:relative;}
+  .flow-num{
+    width:38px;height:38px;flex-shrink:0;border-radius:50%;background:rgba(255,255,255,.08);
+    border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;color:#cfe0ff;
+  }
+  .flow-step p{margin:0;font-weight:700;font-size:15.5px;}
+  .flow-connector{
+    width:1.5px;height:22px;background:rgba(255,255,255,.25);margin-left:18.5px;
+  }
+
+  /* ---------- pricing ---------- */
+  .pricing-bg{background:var(--bg-soft);}
+  .pricing-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:920px;margin:0 auto;}
+  @media(max-width:760px){.pricing-cols{grid-template-columns:1fr;}}
+  .pcard{
+    background:#fff;border-radius:24px;padding:34px;border:1.5px solid var(--line);position:relative;
+  }
+  .pcard.highlight{
+    border-color:var(--blue-500);box-shadow:0 24px 50px -20px rgba(21,84,216,.35);
+  }
+  .pcard .tagb{
+    position:absolute;top:-13px;right:28px;background:var(--grad);color:#fff;font-size:12px;font-weight:800;
+    padding:6px 14px;border-radius:999px;
+  }
+  .pcard h3{font-size:17px;margin:0 0 6px;color:var(--ink-soft);font-weight:700;}
+  .pcard .price{font-size:38px;font-weight:800;margin:6px 0 4px;letter-spacing:-0.02em;}
+  .pcard .price span{font-size:15px;color:var(--ink-soft);font-weight:600;}
+  .pcard ul{list-style:none;padding:0;margin:22px 0 28px;display:flex;flex-direction:column;gap:11px;}
+  .pcard li{font-size:14px;font-weight:600;display:flex;gap:9px;align-items:flex-start;}
+  .pcard li::before{content:"✓";color:var(--green);font-weight:800;}
+  .pcard li.plus::before{color:var(--blue-700);}
+  .pcard .btn{width:100%;justify-content:center;}
+
+  /* ---------- why choose ---------- */
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center;}
+  @media(max-width:900px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:520px){.why-grid{grid-template-columns:1fr;}}
+  .why-card{padding:26px 16px;}
+  .why-card .ficon{margin:0 auto 14px;}
+  .why-card p{font-weight:700;font-size:14.5px;margin:0;}
+
+  /* ---------- faq ---------- */
+  .faq-wrap{max-width:720px;margin:0 auto;}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;padding:20px 4px;
+    font-weight:700;font-size:15.5px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;color:var(--ink);
+  }
+  .faq-q::after{content:"+";font-size:22px;color:var(--blue-700);font-weight:400;transition:transform .2s;}
+  .faq-item.open .faq-q::after{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-a p{margin:0 4px 18px;color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
+  .faq-item.open .faq-a{max-height:120px;}
+
+  /* ---------- lead capture ---------- */
+  .lead-bg{
+    background:
+      radial-gradient(700px 380px at 90% 0%, #dbe8ff, transparent 60%),
+      var(--bg-soft);
+  }
+  .lead-wrap{
+    max-width:980px;margin:0 auto;background:#fff;border-radius:26px;border:1px solid var(--line);
+    box-shadow:var(--shadow);padding:48px;display:grid;grid-template-columns:1fr 1fr;gap:40px;
+  }
+  @media(max-width:820px){.lead-wrap{grid-template-columns:1fr;padding:30px;}}
+  .lead-copy h2{font-size:clamp(24px,3vw,32px);font-weight:800;margin:0 0 14px;letter-spacing:-0.01em;}
+  .lead-copy p{color:var(--ink-soft);font-size:15px;line-height:1.6;}
+  .lead-copy .badges{margin-top:24px;}
+  .form-field{margin-bottom:14px;}
+  .form-field label{font-size:13px;font-weight:700;color:var(--ink-soft);display:block;margin-bottom:6px;}
+  .form-field input, .form-field textarea{
+    width:100%;padding:13px 14px;border-radius:10px;border:1.5px solid var(--line);font-family:inherit;font-size:14px;
+    background:var(--bg-soft);
+  }
+  .form-field input:focus, .form-field textarea:focus{outline:2px solid var(--blue-500);border-color:transparent;}
+  .form-field textarea{resize:vertical;min-height:70px;}
+  .lead-wrap form .btn{width:100%;justify-content:center;margin-top:6px;}
+
+  /* ---------- final cta ---------- */
+  .final-cta{
+    background:linear-gradient(135deg,#0b2e6b,#1554d8 60%,#2f6dfb);
+    color:#fff;text-align:center;border-radius:30px;margin:0 24px;padding:64px 28px;
+  }
+  .final-cta h2{font-size:clamp(26px,3.6vw,40px);font-weight:800;max-width:680px;margin:0 auto 14px;letter-spacing:-0.01em;}
+  .final-cta p{color:#cfe0ff;font-size:16px;margin-bottom:30px;}
+  .final-cta .cta-row{justify-content:center;}
+  .final-cta .btn-ghost{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3);}
+
+  /* ---------- footer ---------- */
+  footer{background:#0b1733;color:#aab8e0;padding:56px 0 28px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr;gap:28px;}}
+  .foot-logo{margin-bottom:10px;display:flex;align-items:center;}
+  .foot-logo img{height:44px;width:auto;display:block;}
+  footer h4{color:#fff;font-size:13.5px;text-transform:uppercase;letter-spacing:.05em;margin:0 0 14px;}
+  footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;font-size:14px;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.1);margin-top:40px;padding-top:22px;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+
+  /* ---------- sticky whatsapp ---------- */
+  .wa-float{
+    position:fixed;bottom:22px;right:22px;z-index:60;
+    background:var(--green);color:#fff;padding:14px 20px;border-radius:999px;font-weight:700;font-size:14px;
+    display:flex;align-items:center;gap:9px;box-shadow:0 14px 30px -10px rgba(23,178,106,.6);
+  }
+  .wa-float svg{width:20px;height:20px;}
+  @media(max-width:500px){.wa-float span{display:none;} .wa-float{padding:14px;}}
+
+  /* ---------- sticky demo video ---------- */
+  .sticky-video{
+    position:fixed;bottom:22px;left:22px;z-index:59;width:min(300px,calc(100vw - 44px));
+    border-radius:14px;overflow:hidden;background:#000;box-shadow:0 16px 40px -12px rgba(11,46,107,.45);
+    border:2px solid rgba(255,255,255,.9);
+  }
+  .sticky-video-inner{
+    position:relative;aspect-ratio:16/9;cursor:pointer;
+  }
+  .sticky-video-inner iframe{
+    position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none;
+  }
+  .sticky-video-overlay{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.35));
+    color:#fff;font-size:12px;font-weight:700;letter-spacing:.02em;
+    gap:6px;transition:background .2s ease;
+  }
+  .sticky-video-inner:hover .sticky-video-overlay{background:rgba(0,0,0,.45);}
+  .sticky-video-overlay svg{width:28px;height:28px;opacity:.95;}
+  .sticky-video-label{
+    position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);color:#fff;
+    font-size:10.5px;font-weight:700;padding:4px 8px;border-radius:999px;letter-spacing:.03em;
+    text-transform:uppercase;pointer-events:none;
+  }
+  .video-fullscreen{
+    position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.92);
+    display:none;align-items:center;justify-content:center;padding:24px;
+  }
+  .video-fullscreen.open{display:flex;}
+  .video-fullscreen-box{
+    width:min(1100px,100%);aspect-ratio:16/9;position:relative;border-radius:16px;overflow:hidden;
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+  }
+  .video-fullscreen-box iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-fullscreen-close{
+    position:absolute;top:18px;right:18px;width:42px;height:42px;border-radius:50%;
+    border:none;background:rgba(255,255,255,.15);color:#fff;font-size:24px;line-height:1;
+    cursor:pointer;backdrop-filter:blur(6px);
+  }
+  .video-fullscreen-close:hover{background:rgba(255,255,255,.25);}
+  @media(max-width:640px){
+    .sticky-video{bottom:88px;width:min(220px,calc(100vw - 110px));}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <div class="nav">
+    <a href="#" class="logo"><img src="logo.png" alt="Servicemate"></a>
+    <nav class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#platform">Platform</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a href="#lead" class="nav-cta">Book Demo</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg> Ready-to-launch home services platform</div>
+    <h1>Launch Your Own <span class="accent">Urban Company Style</span> Service App</h1>
+    <p class="sub">Complete home services platform with User App, Provider App, Admin Panel, booking management, payments, packages, notifications and provider assignment — built and ready to deploy.</p>
+    <div class="cta-row">
+      <a href="#lead" class="btn btn-primary">Book Demo →</a>
+      <a href="#" class="btn btn-whats wa-link">
+        <svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.4L3 21l3.7-1.27a8.9 8.9 0 0 0 4.33 1.14h.01a8.94 8.94 0 0 0 6.32-15.55zM12.05 19.4a7.4 7.4 0 0 1-3.77-1.03l-.27-.16-2.83.97.95-2.76-.17-.28a7.42 7.42 0 0 1 11.6-9.1 7.36 7.36 0 0 1 2.18 5.25 7.43 7.43 0 0 1-7.69 7.11zm4.07-5.56c-.22-.11-1.31-.65-1.51-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.1-.94-.34-1.78-1.1-.66-.58-1.1-1.3-1.23-1.52-.13-.22-.01-.34.1-.45.11-.11.25-.29.37-.43.13-.15.17-.25.26-.42.08-.17.04-.31-.04-.43-.08-.11-.46-1.12-.63-1.53-.17-.4-.34-.34-.46-.34h-.4c-.13 0-.34.05-.52.25-.18.2-.7.7-.7 1.71 0 1.01.72 1.99.82 2.13.1.13 1.4 2.15 3.4 2.93 1.99.78 1.99.52 2.35.49.36-.03 1.31-.53 1.5-1.05.18-.51.18-.95.13-1.05-.06-.1-.22-.16-.46-.27z"/></svg>
+        Get WhatsApp Quote
+      </a>
+      <a href="#demo" class="btn btn-ghost"><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Demo Video</a>
+    </div>
+    <div class="badges">
+      <span class="badge">User App</span>
+      <span class="badge">Provider App</span>
+      <span class="badge">Admin Panel</span>
+      <span class="badge">Ready Backend</span>
+      <span class="badge">Razorpay Integration</span>
+      <span class="badge">Android Build Ready</span>
+    </div>
+
+    <div class="hero-visual">
+      <img src="hero.png" alt="Servicemate platform — User App, Admin Panel, and Provider App" class="hero-img">
+    </div>
+  </div>
+</section>
+
+<!-- DEMO VIDEO -->
+<section class="demo-section" id="demo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Live walkthrough</div>
+      <h2>See The Platform In Action</h2>
+      <p>Watch the complete demo of the platform including booking flow, provider assignment, admin operations and package management.</p>
+    </div>
+    <div class="video-card">
+      <span class="video-tag"><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M8 5v14l11-7z"/></svg> Demo Walkthrough</span>
+      <iframe id="demo-video-iframe" title="Servicemate platform demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <div class="feat-pills">
+      <span class="pill">User Booking</span>
+      <span class="pill">Provider App</span>
+      <span class="pill">OTP Verification</span>
+      <span class="pill">Admin Assignment</span>
+      <span class="pill">Payments</span>
+      <span class="pill">Package System</span>
+      <span class="pill">Homepage Customization</span>
+    </div>
+    <div class="cta-row" style="justify-content:center;margin-top:34px;">
+      <a href="#lead" class="btn btn-primary">Request Full Demo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY THIS PLATFORM -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">All-in-one</div>
+      <h2>Everything Needed To Run A Home Services Business</h2>
+    </div>
+    <div class="grid-cards">
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12" y2="18.01"/></svg></div><h3>User Mobile App</h3><p>Browse, book and track services on the go.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div><h3>Provider Mobile App</h3><p>Manage jobs, OTP and completion in one place.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Admin Dashboard</h3><p>Full control over bookings, providers and revenue.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h3>Payment Gateway</h3><p>Razorpay powered, secure checkout built in.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V9z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></svg></div><h3>Package Membership System</h3><p>Sell bundles and recurring service plans.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>OTP Verification</h3><p>Confirm service start with secure OTP checks.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><h3>Booking Tracking</h3><p>Live status from request to completion.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><h3>Push Notifications</h3><p>Keep customers and providers in sync.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg></div><h3>Lead Management</h3><p>Capture and follow up on every inquiry.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Role Based Access</h3><p>Granular permissions across your team.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg></div><h3>Service Area Control</h3><p>Define exactly where you operate.</p></div>
+      <div class="fcard"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h3>Analytics Dashboard</h3><p>Track growth, revenue and performance.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM OVERVIEW -->
+<section class="pricing-bg" id="platform">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Three apps, one platform</div>
+      <h2>Platform Overview</h2>
+      <p>A connected experience for customers, providers and your operations team.</p>
+    </div>
+    <div class="platform-stack">
+      <div class="platform-mobile-row">
+        <div class="platform-col">
+          <span class="tag">01 · CUSTOMER</span>
+          <h3>User App</h3>
+          <div class="platform-shot platform-shot--mobile">
+            <img src="user.png" alt="Servicemate User App home screen">
+          </div>
+          <ul class="platform-feats">
+            <li>Service Booking</li><li>Cart</li><li>Checkout</li><li>Tracking</li><li>Packages</li><li>Ratings</li><li>Support</li>
+          </ul>
+        </div>
+        <div class="platform-col">
+          <span class="tag">02 · PROVIDER</span>
+          <h3>Provider App</h3>
+          <div class="platform-shot platform-shot--mobile">
+            <img src="provider.png" alt="Servicemate Provider App orders screen">
+          </div>
+          <ul class="platform-feats">
+            <li>Order Management</li><li>OTP Verification</li><li>Service Completion</li><li>Additional Services</li><li>Profile Management</li>
+          </ul>
+        </div>
+      </div>
+      <div class="platform-col platform-col--admin">
+        <div class="platform-admin-head">
+          <span class="tag">03 · ADMIN</span>
+          <h3>Admin Panel</h3>
+        </div>
+        <div class="platform-shot platform-shot--wide">
+          <img src="admin.png" alt="Servicemate Admin Panel dashboard">
+        </div>
+        <ul class="platform-feats platform-feats--wide">
+          <li>Provider Assignment</li><li>Bookings</li><li>Payments</li><li>Packages</li><li>Homepage Customization</li><li>Analytics</li><li>Lead Management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE HIGHLIGHTS -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Under the hood</div>
+      <h2>Powerful Features Included</h2>
+    </div>
+    <div class="chip-grid">
+      <div class="chip"><span class="dotc"></span>Customer App</div>
+      <div class="chip"><span class="dotc"></span>Provider App</div>
+      <div class="chip"><span class="dotc"></span>Admin Panel</div>
+      <div class="chip"><span class="dotc"></span>Booking Management</div>
+      <div class="chip"><span class="dotc"></span>Package System</div>
+      <div class="chip"><span class="dotc"></span>Membership Plans</div>
+      <div class="chip"><span class="dotc"></span>Live Notifications</div>
+      <div class="chip"><span class="dotc"></span>Google Maps</div>
+      <div class="chip"><span class="dotc"></span>Razorpay Payments</div>
+      <div class="chip"><span class="dotc"></span>Service Categories</div>
+      <div class="chip"><span class="dotc"></span>Custom Homepage Rows</div>
+      <div class="chip"><span class="dotc"></span>Promotional Cards</div>
+      <div class="chip"><span class="dotc"></span>Lead Management</div>
+      <div class="chip"><span class="dotc"></span>Support Tickets</div>
+      <div class="chip"><span class="dotc"></span>Role Management</div>
+      <div class="chip"><span class="dotc"></span>Blog Management</div>
+      <div class="chip"><span class="dotc"></span>Location Control</div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGE & MEMBERSHIP -->
+<section class="pricing-bg">
+  <div class="wrap">
+    <div class="pkg-wrap">
+      <div>
+        <div class="sec-eyebrow">Recurring revenue</div>
+        <h2 style="font-size:clamp(24px,3vw,34px);font-weight:800;margin:0 0 12px;">Increase Revenue With Packages</h2>
+        <p style="color:var(--ink-soft);font-size:15.5px;line-height:1.6;">Allow customers to purchase prepaid service packages and membership plans — and let them renew automatically.</p>
+        <div class="pkg-feats">
+          <div>Service Bundles</div>
+          <div>Visit Packages</div>
+          <div>Membership Plans</div>
+          <div>Package Tracking</div>
+          <div>Usage History</div>
+          <div>Renewals</div>
+          <div>Admin Package Control</div>
+        </div>
+      </div>
+      <div class="pkg-visual">
+        <img src="packages.png" alt="Servicemate package and membership screens">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOMEPAGE CUSTOMIZATION -->
+<section>
+  <div class="wrap">
+    <div class="custom-wrap">
+      <div class="custom-visual">
+        <img src="customisation.png" alt="Servicemate homepage customization builder">
+      </div>
+      <div>
+        <div class="sec-eyebrow">No-code control</div>
+        <h2 style="font-size:clamp(24px,3vw,34px);font-weight:800;margin:0 0 16px;">Control Homepage Without Developers</h2>
+        <div class="custom-list">
+          <div class="item"><div class="num">1</div><p>Create custom service rows</p></div>
+          <div class="item"><div class="num">2</div><p>Add promotional cards</p></div>
+          <div class="item"><div class="num">3</div><p>Manage display order</p></div>
+          <div class="item"><div class="num">4</div><p>Drag & drop services</p></div>
+          <div class="item"><div class="num">5</div><p>Enable / disable rows</p></div>
+          <div class="item"><div class="num">6</div><p>Promote packages, categories & blogs</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS FLOW -->
+<section class="flow-bg">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">How it works</div>
+      <h2>From Booking To Rating, Fully Tracked</h2>
+      <p>Every job follows the same reliable path — automated and visible at each step.</p>
+    </div>
+    <div class="flow-list">
+      <div class="flow-step"><div class="flow-num">1</div><p>Customer books service</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">2</div><p>Admin receives booking</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">3</div><p>Provider assigned</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">4</div><p>Provider travels</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">5</div><p>OTP verification</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">6</div><p>Service starts</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">7</div><p>Additional services</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">8</div><p>Service completed</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">9</div><p>Payment collection</p></div>
+      <div class="flow-connector"></div>
+      <div class="flow-step"><div class="flow-num">10</div><p>Rating submitted</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Simple one-time pricing</div>
+      <h2>Choose Your Launch Plan</h2>
+    </div>
+    <div class="pricing-cols">
+      <div class="pcard">
+        <h3>PLATFORM SOURCE CODE</h3>
+        <div class="price">₹20,000</div>
+        <ul>
+          <li>User App</li>
+          <li>Provider App</li>
+          <li>Admin Panel</li>
+          <li>Backend APIs</li>
+          <li>MySQL Database</li>
+          <li>Documentation</li>
+          <li>Source Code</li>
+        </ul>
+        <a href="#lead" class="btn btn-ghost">Get Source Code</a>
+      </div>
+      <div class="pcard highlight">
+        <span class="tagb">Most Popular</span>
+        <h3>COMPLETE SETUP & DEPLOYMENT</h3>
+        <div class="price">₹30,000</div>
+        <ul>
+          <li>Everything in ₹20,000 package</li>
+          <li class="plus">Android Build Setup</li>
+          <li class="plus">Firebase Setup</li>
+          <li class="plus">Razorpay Setup</li>
+          <li class="plus">Server Configuration</li>
+          <li class="plus">Database Setup</li>
+          <li class="plus">Domain Connection</li>
+          <li class="plus">Production Deployment</li>
+          <li class="plus">Console Configuration</li>
+          <li class="plus">Live Application Setup</li>
+          <li class="plus">Technical Assistance</li>
+        </ul>
+        <a href="#lead" class="btn btn-primary">Launch My Platform</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="pricing-bg">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Why Servicemate</div>
+      <h2>Why Choose Us</h2>
+    </div>
+    <div class="why-grid">
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><p>Fast Delivery</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 20v3"/><path d="M15 20v3"/><path d="M20 9h3"/><path d="M20 14h3"/><path d="M1 9h3"/><path d="M1 14h3"/></svg></div><p>Modern Tech Stack</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><p>Scalable Architecture</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg></div><p>Business Ready Features</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div><p>Source Code Ownership</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div><p>No Monthly Commission</p></div>
+      <div class="fcard why-card"><div class="ficon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><p>One Time Cost</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">Questions</div>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <button class="faq-q">Can I customize the platform? <span></span></button>
+        <div class="faq-a"><p>Yes — the platform is fully customizable to match your brand and workflow.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I add new services?</button>
+        <div class="faq-a"><p>Yes, you can add new service categories and listings anytime from the admin panel.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I manage providers?</button>
+        <div class="faq-a"><p>Yes, the admin panel gives full control over onboarding, assignment and performance.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I create packages?</button>
+        <div class="faq-a"><p>Yes, build service bundles and membership packages with full tracking.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can I control homepage content?</button>
+        <div class="faq-a"><p>Yes, manage rows, promotions and layout without writing any code.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I get source code?</button>
+        <div class="faq-a"><p>Yes, full source code is included with both pricing packages.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Can you deploy it for me?</button>
+        <div class="faq-a"><p>Yes, our complete setup package handles deployment end-to-end.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD CAPTURE -->
+<section class="lead-bg" id="lead">
+  <div class="wrap">
+    <div class="lead-wrap">
+      <div class="lead-copy">
+        <h2>Ready To Launch Your Service Marketplace?</h2>
+        <p>Get the complete demo video and feature list sent straight to you — no obligation.</p>
+        <div class="badges">
+          <span class="badge">Free demo walkthrough</span>
+          <span class="badge">Full feature list</span>
+          <span class="badge">Pricing breakdown</span>
+        </div>
+      </div>
+      <form id="lead-form">
+        <div class="form-field"><label for="lead-name">Name</label><input id="lead-name" name="name" type="text" required placeholder="Your full name"></div>
+        <div class="form-field"><label for="lead-phone">Phone Number</label><input id="lead-phone" name="phone" type="tel" required placeholder="WhatsApp number"></div>
+        <div class="form-field"><label for="lead-business">Business Name</label><input id="lead-business" name="business" type="text" placeholder="Your business name"></div>
+        <div class="form-field"><label for="lead-city">City</label><input id="lead-city" name="city" type="text" placeholder="Your city"></div>
+        <div class="form-field"><label for="lead-requirements">Requirements</label><textarea id="lead-requirements" name="requirements" placeholder="Tell us briefly what you need"></textarea></div>
+        <button type="submit" class="btn btn-primary">Request Demo →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section style="padding-top:0;">
+  <div class="wrap">
+    <div class="final-cta">
+      <h2>Launch Your Own Urban Company Style Platform Today</h2>
+      <p>Get complete demo video + pricing details sent to you instantly.</p>
+      <div class="cta-row">
+        <a href="#demo" class="btn btn-ghost"><svg class="ico-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch Demo</a>
+        <a href="#" class="btn btn-whats wa-link">Get WhatsApp Quote</a>
+        <a href="#lead" class="btn btn-primary">Book Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo"><img src="logo.png" alt="Servicemate"></div>
+        <p style="font-size:14px;line-height:1.6;max-width:280px;">A complete home services marketplace platform — ready to launch, ready to scale.</p>
+      </div>
+      <div>
+        <h4>Technology Stack</h4>
+        <ul>
+          <li>React Native</li><li>React JS</li><li>Python Flask</li><li>MySQL</li><li>Firebase</li><li>Razorpay</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/918307802643" target="_blank" rel="noopener">WhatsApp: +91 83078 02643</a></li>
+          <li>Email: hello@servicemate.app</li>
+          <li>Mon–Sat, 10am–7pm IST</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Servicemate. All rights reserved.</span>
+      <span>Built for service marketplace founders.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING -->
+<a href="#" class="wa-float wa-link">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.6 6.32A8.86 8.86 0 0 0 12.05 4a8.94 8.94 0 0 0-7.74 13.4L3 21l3.7-1.27a8.9 8.9 0 0 0 4.33 1.14h.01a8.94 8.94 0 0 0 6.32-15.55zM12.05 19.4a7.4 7.4 0 0 1-3.77-1.03l-.27-.16-2.83.97.95-2.76-.17-.28a7.42 7.42 0 0 1 11.6-9.1 7.36 7.36 0 0 1 2.18 5.25 7.43 7.43 0 0 1-7.69 7.11zm4.07-5.56c-.22-.11-1.31-.65-1.51-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.1-.94-.34-1.78-1.1-.66-.58-1.1-1.3-1.23-1.52-.13-.22-.01-.34.1-.45.11-.11.25-.29.37-.43.13-.15.17-.25.26-.42.08-.17.04-.31-.04-.43-.08-.11-.46-1.12-.63-1.53-.17-.4-.34-.34-.46-.34h-.4c-.13 0-.34.05-.52.25-.18.2-.7.7-.7 1.71 0 1.01.72 1.99.82 2.13.1.13 1.4 2.15 3.4 2.93 1.99.78 1.99.52 2.35.49.36-.03 1.31-.53 1.5-1.05.18-.51.18-.95.13-1.05-.06-.1-.22-.16-.46-.27z"/></svg>
+  <span>Chat On WhatsApp</span>
+</a>
+
+<!-- STICKY DEMO VIDEO -->
+<div class="sticky-video" id="sticky-video">
+  <div class="sticky-video-inner" id="sticky-video-trigger" role="button" tabindex="0" aria-label="Expand demo video to fullscreen">
+    <span class="sticky-video-label">Demo Video</span>
+    <iframe id="sticky-video-iframe" title="Servicemate demo video preview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div class="sticky-video-overlay">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      Tap to expand
+    </div>
+  </div>
+</div>
+
+<div class="video-fullscreen" id="video-fullscreen" aria-hidden="true">
+  <button class="video-fullscreen-close" id="video-fullscreen-close" type="button" aria-label="Close video">&times;</button>
+  <div class="video-fullscreen-box">
+    <iframe id="video-fullscreen-iframe" title="Servicemate demo video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script>
+  const WA_NUMBER = '918307802643';
+  const WA_DEFAULT_MSG = "Hi, I'm interested in the Servicemate home services platform. Please share demo and pricing details.";
+  const YOUTUBE_VIDEO_ID = 'YXNNvWsKl0I';
+
+  function youtubeEmbed(id, options) {
+    options = options || {};
+    var loop = options.loop;
+    var opts = Object.assign({}, options);
+    delete opts.loop;
+    var params = new URLSearchParams(Object.assign({
+      autoplay: '1',
+      mute: '1',
+      rel: '0',
+      modestbranding: '1',
+      playsinline: '1'
+    }, opts));
+    if (loop) {
+      params.set('loop', '1');
+      params.set('playlist', id);
+    }
+    return 'https://www.youtube.com/embed/' + id + '?' + params.toString();
+  }
+
+  var stickyIframe = document.getElementById('sticky-video-iframe');
+  var demoIframe = document.getElementById('demo-video-iframe');
+  var fullscreenIframe = document.getElementById('video-fullscreen-iframe');
+  var fullscreenModal = document.getElementById('video-fullscreen');
+  var stickyTrigger = document.getElementById('sticky-video-trigger');
+
+  demoIframe.src = youtubeEmbed(YOUTUBE_VIDEO_ID, { autoplay: '0', mute: '0', controls: '1' });
+  stickyIframe.src = youtubeEmbed(YOUTUBE_VIDEO_ID, { controls: '0', loop: true });
+
+  function openVideoFullscreen() {
+    fullscreenIframe.src = youtubeEmbed(YOUTUBE_VIDEO_ID, { mute: '0', controls: '1' });
+    fullscreenModal.classList.add('open');
+    fullscreenModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoFullscreen() {
+    fullscreenModal.classList.remove('open');
+    fullscreenModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    fullscreenIframe.src = '';
+  }
+
+  stickyTrigger.addEventListener('click', openVideoFullscreen);
+  stickyTrigger.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openVideoFullscreen();
+    }
+  });
+  document.getElementById('video-fullscreen-close').addEventListener('click', closeVideoFullscreen);
+  fullscreenModal.addEventListener('click', function(e) {
+    if (e.target === fullscreenModal) closeVideoFullscreen();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && fullscreenModal.classList.contains('open')) closeVideoFullscreen();
+  });
+
+  function waLink(text) {
+    return 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(text);
+  }
+
+  document.querySelectorAll('.wa-link').forEach(function(el) {
+    el.href = waLink(WA_DEFAULT_MSG);
+    el.target = '_blank';
+    el.rel = 'noopener';
+  });
+
+  document.getElementById('lead-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name = document.getElementById('lead-name').value.trim();
+    var phone = document.getElementById('lead-phone').value.trim();
+    var business = document.getElementById('lead-business').value.trim();
+    var city = document.getElementById('lead-city').value.trim();
+    var requirements = document.getElementById('lead-requirements').value.trim();
+
+    var msg = "Hi Servicemate,\n\nI'd like to request a demo.\n\n";
+    msg += "Name: " + name + "\n";
+    msg += "Phone: " + phone + "\n";
+    if (business) msg += "Business: " + business + "\n";
+    if (city) msg += "City: " + city + "\n";
+    if (requirements) msg += "Requirements: " + requirements + "\n";
+
+    window.open(waLink(msg), '_blank');
+  });
+
+  document.querySelectorAll('.faq-q').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const item = btn.closest('.faq-item');
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
 </html>
